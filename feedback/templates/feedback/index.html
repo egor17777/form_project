@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>Document</title>
+    <link rel = "stylesheet" href = "{% static 'feedback/css/style.css' %}">
 </head>
 <body>
     <h2>Оставте отзыв</h2>
@@ -12,21 +13,14 @@
     {% endif %}
     <form action="/" method="post">
         {% csrf_token %}
-        <label for="first_name_id">First name:</label><br>
-        <input type="text" id="first_name_id" name="name">
-        <br><br>
-        <label for="last_name_id">Last name:</label><br>
-        <input type="text" id="last_name_id" name="surname">
-        <br><br>
-        <label for="feedback_id">Reviews:</label><br>
-        <textarea name="feedback" id="feedback_id" cols="30" rows="10"></textarea>
-        <br><br>
-        <label for="gender">Gender: </label>
-        <select id="gender" name="gender">
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-        </select>
-        <br><br>
+        {% for filed in form %}
+        <div class = "form-style {% if filed.errors %}errors{% endif %}">
+            {{filed.label_tag}}
+            {{filed.errors}}
+            {{filed}}
+        </div>
+        {% endfor %}
+        
         <Button type="submit">Submit</Button>
     </form>
 </body>
